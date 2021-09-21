@@ -1,0 +1,27 @@
+description: >
+  This command echos "Hello World" using file inclusion.
+# What will this command do?
+# Descriptions should be short, simple, and clear.
+parameters:
+  path:
+    type: string
+    default: "./charts"
+    description: "Hello to whom?"
+  repo:
+    type: string
+    default: ""
+    description: "Hello to whom?"
+  app-name:
+    type: string
+    default: ""
+    description: "App name"
+steps:
+  - run:
+      environment:
+        HELM_CHARTS_PATH: <<parameters.path>>
+        HELM_EXPERIMENTAL_OCI: "1"
+      name: push helm chart
+      command: |
+      helm chart save <<parameters.path>>  <<parameters.path>>/helm/<<parameters.app-name>>:0.0.1
+      helm chart push <<parameters.path>>/helm/<<parameters.app-name>>:0.0.1
+
